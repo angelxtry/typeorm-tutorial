@@ -4,17 +4,6 @@ import {
   Column,
 } from 'typeorm';
 
-export enum ProviderEnum {
-  GOOGLE = 'GOOGLE',
-  FACEBOOK = 'FACEBOOK',
-}
-
-export enum OpenImageChoiceEnum {
-  OPEN = 'OPEN',
-  FRIEND = 'FRIEND',
-  CLOSE = 'CLOSE',
-}
-
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
