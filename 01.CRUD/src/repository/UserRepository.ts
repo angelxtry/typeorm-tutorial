@@ -14,4 +14,8 @@ export class UserRepository extends Repository<User> {
     const users = this.create(usersInfo);
     return this.save(users);
   }
+
+  async findByEmail(email: string) {
+    return this.findOne({ email });
+  }
 }
