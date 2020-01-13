@@ -50,4 +50,26 @@ describe('Motivation Repostory', () => {
     const result = currentUser.motivations.map((m) => m.motivation);
     expect(result.sort()).toEqual(motivations2.sort());
   });
+
+  it('motivation 재등록이 실패하면 기존 데이터가 유지된다.', async () => {
+    // user를 하나 생성하고
+    // motivation을 1개 추가하고
+    // 다시 motivation을 저장할 때는 실패.
+    // 해당 user로 조회하여 처음 motivation이 유지되는지 확인한다.
+    const user = await getUserRepository().createUser(users[0]);
+    const motivations1 = [
+      MotivationEnum.FIND_FRIEND,
+      MotivationEnum.LONELINESS,
+    ];
+    await getMotivationRepository().saveByUserId(user.id, motivations1);
+
+    await getMotivationRepository().saveByUserId(user.id, ['ABC']);
+
+    const currentUser = (await getUserRepository().findByUserId(
+      user.id,
+    )) as User;
+    // console.log(currentUser);
+    const result = currentUser.motivations.map((m) => m.motivation);
+    expect(result.sort()).toEqual(motivations1.sort());
+  });
 });
